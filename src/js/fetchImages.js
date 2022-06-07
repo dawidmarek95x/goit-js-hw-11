@@ -13,12 +13,13 @@ export async function fetchImages(searchedValue, page) {
     page,
   });
 
-  await axios({
-    method: 'get',
-    url: `https://pixabay.com/api/?${params}`,
-  })
-  .then((response) => {
-    console.log(response.data);
+  try {
+    const response = await axios({
+      method: 'get',
+      url: `https://pixabay.com/api/?${params}`,
+    });
     return response.data;
-  });
+  } catch (error) {
+    console.log(`Error: ${error}`);
+  }
 };
