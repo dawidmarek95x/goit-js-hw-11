@@ -4,19 +4,13 @@ import './sass/main.scss';
 // Import the function that executes the query to the server for the searched images
 import { fetchImages } from './js/fetchImages';
 
-// Import of Axios library
-import axios from 'axios';
-
 // Import of Notiflix library
 import Notiflix from 'notiflix';
 import 'notiflix/dist/notiflix-3.2.5.min.css';
 
 // Import of simpleLightbox library
-import simpleLightbox from 'simplelightbox';
+import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-
-// Import of lodash.debounce library
-import {debounce} from 'lodash';
 
 // Optimizing function (shortening the record) for searching for elements on the page
 const qs = (selector) => document.querySelector(selector);
@@ -30,6 +24,7 @@ const gallery = qs(".gallery");
 let pageNumber;
 let displayedImages;
 let totalOfHits;
+let lightbox;
 
 // Call the new search function after submitting the form
 searchForm.addEventListener("submit", newSearch);
@@ -93,7 +88,11 @@ function renderImages({hits, totalHits}) {
 
   gallery.insertAdjacentHTML("beforeend", markups);
 
-  new SimpleLightbox(".gallery__item a");
+  if (typeof lightbox === "object") {
+    lightbox.destroy();
+  }
+
+  lightbox = new SimpleLightbox(".gallery__item a");
 
   displayedImages += hits.length;
   checkingForImagesLeft();
