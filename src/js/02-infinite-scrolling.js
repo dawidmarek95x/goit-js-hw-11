@@ -1,8 +1,8 @@
 // Import of styles
-import './sass/main.scss';
+import '../sass/02-main.scss';
 
 // Import the function that executes the query to the server for the searched images
-import { fetchImages } from './js/fetchImages';
+import { fetchImages } from './fetchImages';
 
 // Import of Notiflix library
 import Notiflix from 'notiflix';
@@ -18,7 +18,6 @@ const qs = (selector) => document.querySelector(selector);
 // Search for input and output elements
 const searchForm = qs(".search-form");
 const searchInput = qs(".search-form__input");
-const loadMoreImgBtn = qs(".load-more");
 const gallery = qs(".gallery");
 
 let pageNumber;
@@ -29,23 +28,13 @@ let lightbox;
 // Call the new search function after submitting the form
 searchForm.addEventListener("submit", newSearch);
 
-// Calling up the function of loading additional images after clicking on the "LOAD MORE" button
-loadMoreImgBtn.addEventListener("click", loadMoreImg);
-
 // Function finding new query results taking into account the value given in the input field
 function newSearch(e) {
   e.preventDefault();
-  loadMoreImgBtn.style.display = "none"
   pageNumber = 1;
   displayedImages = 0;
   searchingImages();
   gallery.innerHTML = "";
-}
-
-// Definition of the function for loading more new images
-function loadMoreImg() {
-  pageNumber += 1;
-  searchingImages();
 }
 
 // Definition of the image search function contained in the backend
@@ -95,14 +84,13 @@ function renderImages({hits, totalHits}) {
   lightbox = new SimpleLightbox(".gallery__item a");
 
   displayedImages += hits.length;
-  checkingForImagesLeft();
 
   if (displayedImages === 0) {
     Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
-  } else if (displayedImages > 0 && displayedImages === totalOfHits) {
-    Notiflix.Notify.info("We're sorry, but you've reached the end of search results.");
   } else if (displayedImages > 0 && pageNumber === 1) {
     Notiflix.Notify.success(`Hooray! We found ${totalOfHits} images.`);
+  } else if (displayedImages > 0 && displayedImages === totalOfHits) {
+    Notiflix.Notify.info("We're sorry, but you've reached the end of search results.");
   }
 
   if (pageNumber > 1) {
@@ -114,13 +102,25 @@ function renderImages({hits, totalHits}) {
       behavior: 'smooth',
     });
   }
+
+  if (totalOfHits === displayedImages) {
+    window.removeEventListener('scroll', infiniteScrolling, {passive: true});
+  } else {
+    window.addEventListener('scroll', infiniteScrolling, {passive: true});
+  }
 }
 
-// Definition of the function to hide the "LOAD MORE" button when there are no more images to be loaded
-function checkingForImagesLeft() {
-  if (totalOfHits === displayedImages) {
-    loadMoreImgBtn.style.display = "none";
-  } else {
-    loadMoreImgBtn.style.display = "block";
+// Function definition for infinite scrolling of images while scrolling the page
+function infiniteScrolling() {
+  const {scrollTop, scrollHeight, clientHeight} = document.documentElement;
+
+  if (clientHeight + scrollTop >= scrollHeight - 5) {
+    loadMoreImg();
   }
+}
+
+// Definition of the function for loading more new images
+function loadMoreImg() {
+  pageNumber += 1;
+  searchingImages();
 }

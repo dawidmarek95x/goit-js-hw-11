@@ -6,30 +6,17 @@
     <title>Homework #11 (JavaScript)</title>
     <link 
       rel="stylesheet" 
-      href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/1.1.0/modern-normalize.min.css" integrity="sha512-wpPYUAdjBVSE4KJnH1VR1HeZfpl1ub8YT/NKx4PuQ5NmX2tKuGu6U/JRp5y+Y8XG2tV+wKQpNHVUX03MfMFn9Q==" crossorigin="anonymous" 
+      href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/1.1.0/modern-normalize.min.css" 
+      integrity="sha512-wpPYUAdjBVSE4KJnH1VR1HeZfpl1ub8YT/NKx4PuQ5NmX2tKuGu6U/JRp5y+Y8XG2tV+wKQpNHVUX03MfMFn9Q==" 
+      crossorigin="anonymous" 
       referrerpolicy="no-referrer" />
   </head>
   <body>
-    <form class="search-form" id="search-form">
-      <div class="search-form--wrapper">
-        <input
-        class="search-form__input"
-        type="text"
-        name="searchQuery"
-        autocomplete="off"
-        placeholder="Search images..."
-      />
-      <button class="search-form__btn" type="submit">
-        <svg  class="search-icon">
-          <use href="./images/icons.svg#icon-search"></use>
-        </svg>
-      </button>
-      </div>
-    </form>
+    <ul>
+      <li><a target="_blank" href="./01-load-more.html">Image search (with "load more" button)</a></li>
+      <li><a target="_blank" href="./02-infinite-scrolling.html">Image search (infinite scrolling)</a></li>
+    </ul>
 
-    <div class="gallery"></div>
-    <button type="button" class="load-more">Load more</button>
-
-    <script type="module" src="./index.js"></script>
+    <script type="module" src="./js/index.js"></script>
   </body>
 </html>
