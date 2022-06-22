@@ -42,7 +42,7 @@ function newSearch(e) {
   gallery.innerHTML = "";
 }
 
-// Definicja funkcji ładowania nowych obrazów
+// Definition of the function for loading more new images
 function loadMoreImg() {
   pageNumber += 1;
   searchingImages();
