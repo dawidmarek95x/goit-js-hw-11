@@ -16,3 +16,13 @@ img {
   display: block;
   max-width: 100%;
 }
+
+.links {
+  color: blue;
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    color: limegreen;
+  }
+}

@@ -6,6 +6,7 @@ export async function fetchImages(searchedValue, page) {
   const params = new URLSearchParams({
     key: "27887941-26f96d7878e5748cf06133d38",
     q: searchedValue,
+    lang: "pl",
     image_type: "photo",
     orientation: "horizontal",
     safesearch: true,
